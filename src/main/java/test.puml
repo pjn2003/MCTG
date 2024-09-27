@@ -1,0 +1,51 @@
+@startuml
+class User {
+-string name;
+-string password;
+-int coins=20;
+
+-list cardInventory;
+-list deck;
++void login(string password)
++void getDeck()
+}
+
+enum Element{
+Fire,
+Water,
+Normal
+}
+
+abstract class Card
+{
+
+-int tier;
+-string name;
+-int baseDamage;
+-Element element;
+
++void describe();
+
+}
+
+
+
+
+class MonsterCard
+{
++MonsterType type;
++override void describe()
+}
+class SpellCard
+{
++override void describe()
+}
+
+Card <|-- "extends" MonsterCard
+Card <|-- "extends" SpellCard
+
+User "owns multiple" *-- Card
+Card "has one" *-- Element
+
+
+@enduml
