@@ -29,7 +29,7 @@ abstract class Card
 
 }
 
-class Manager
+class GameManager
 {
     +void trade(User player1, User player2);
     +void battle(User player1, User player2);
@@ -71,6 +71,6 @@ User "owns multiple" *-- Card
 Card "has one" *-- Element
 
 MonsterCard "has one" *-- MonsterType
-User "interacts with other users through" --* Manager
+User "interacts with other users through" --* GameManager
 
 @enduml
