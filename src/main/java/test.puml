@@ -6,8 +6,9 @@ class User {
 
 -list cardInventory;
 -list deck;
-+void login(string password)
-+void getDeck()
++void login(string password);
++void getDeck();
++void buyCards();
 }
 
 enum Element{
@@ -28,8 +29,30 @@ abstract class Card
 
 }
 
+class Manager
+{
+    +void trade(User player1, User player2);
+    +void battle(User player1, User player2);
+}
+
+class Main()
+{
+    void resolveElement();
+    void resolveMonsterType();
+    void fight();
+}
 
 
+enum MonsterType
+{
+    Goblin,
+        Wizard,
+        Ork,
+        Knight,
+        Kraken,
+        Elf,
+        Dragon
+}
 
 class MonsterCard
 {
@@ -47,5 +70,7 @@ Card <|-- "extends" SpellCard
 User "owns multiple" *-- Card
 Card "has one" *-- Element
 
+MonsterCard "has one" *-- MonsterType
+User "interacts with other users through" --* Manager
 
 @enduml
