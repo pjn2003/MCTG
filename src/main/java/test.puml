@@ -35,7 +35,7 @@ class GameManager
     +void battle(User player1, User player2);
 }
 
-class Main()
+class Main
 {
     void resolveElement();
     void resolveMonsterType();
@@ -64,6 +64,13 @@ class SpellCard
 +override void describe()
 }
 
+class Server
+{
+   Database userData;
+   List ranking;
+}
+
+
 Card <|-- "extends" MonsterCard
 Card <|-- "extends" SpellCard
 
@@ -72,5 +79,8 @@ Card "has one" *-- Element
 
 MonsterCard "has one" *-- MonsterType
 User "interacts with other users through" --* GameManager
+
+Main "Communicates with" --* Server
+
 
 @enduml

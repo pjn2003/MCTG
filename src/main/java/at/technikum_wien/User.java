@@ -4,7 +4,8 @@ public class User {
     String username;
     String password;
 
-    int coins;
+    Integer coins;
+
 
     public User(String uname, String pass) {
         username = uname;
