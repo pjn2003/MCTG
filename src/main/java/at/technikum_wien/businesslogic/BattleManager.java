@@ -10,7 +10,7 @@ public class BattleManager {
 
     public void initFight(User user1, User user2)
     {
-
+        System.out.println("Starting fight between: " + user1 + " and " + user2);
     }
 
     public static float resolveElements(Element attack, Element defense)
