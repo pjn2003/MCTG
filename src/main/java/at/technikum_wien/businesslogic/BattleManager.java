@@ -46,11 +46,8 @@ public class BattleManager {
 
     public void fight(Card card1, Card card2)
     {
-        boolean spellActive=false;
-        if (card1 instanceof SpellCard || card2 instanceof SpellCard) //CHeck if there is a spell card
-        {
-            spellActive = true;
-        }
+        boolean spellActive= card1 instanceof SpellCard || card2 instanceof SpellCard;
+        //CHeck if there is a spell card
         System.out.println("Attacker: " + card1.getName() + ", Defender: " + card2.getName());
         float dmg = card1.getBaseDamage();
         if (spellActive)
