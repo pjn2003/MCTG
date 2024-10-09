@@ -3,11 +3,10 @@ package at.technikum_wien.models;
 import lombok.Getter;
 import lombok.Setter;
 
+
 public class MonsterCard extends Card {
 
-    @Getter
-    @Setter
-    private MonsterType type;
+    @Getter @Setter private MonsterType type;
 
     public MonsterCard(String name, int baseDamage, Element element,MonsterType type) {
         setName(name);
