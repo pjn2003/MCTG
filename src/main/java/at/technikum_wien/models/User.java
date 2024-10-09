@@ -1,7 +1,15 @@
-package at.technikum_wien;
+package at.technikum_wien.models;
 
+
+import lombok.Getter;
+import lombok.Setter;
+
+
+@Getter
+@Setter
 public class User {
     String username;
+
     String password;
 
     Integer coins;
@@ -14,7 +22,7 @@ public class User {
     }
 
 
-    public void Login(String pass) {
+    public void login(String pass) {
         if (!password.equals(pass)) {
             System.out.println("Password does not match!");
         }

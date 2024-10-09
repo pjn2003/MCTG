@@ -1,4 +1,4 @@
-package at.technikum_wien;
+package at.technikum_wien.models;
 
 public enum MonsterType {
     Goblin,
