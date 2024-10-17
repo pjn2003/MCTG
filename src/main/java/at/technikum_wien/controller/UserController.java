@@ -1,18 +1,17 @@
-package at.technikum_wien.service;
+package at.technikum_wien.controller;
 
-import at.technikum_wien.controller.Controller;
+import at.technikum_wien.dummydata.UserDummyData;
 import at.technikum_wien.httpserver.http.ContentType;
 import at.technikum_wien.httpserver.http.HttpStatus;
 import at.technikum_wien.httpserver.server.Response;
 import at.technikum_wien.models.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import lombok.Getter;
 
 public class UserController extends Controller {
-    @Getter private UserDummyData dummyData;
+    private UserDummyData dummyData;
     public UserController()
     {
-        this.dummyData = new UserDummyData();
+        this.dummyData = new UserDummyData(false);
     }
 
     //GET user with username
@@ -87,6 +86,40 @@ public class UserController extends Controller {
                     HttpStatus.NOT_FOUND,
                     ContentType.JSON,
                     "{ \"message\" : \"User not found.\" }"
+            );
+        }
+    }
+
+    public Response getUserStats(String uname)
+    {
+        try {
+
+            if(this.dummyData.getUser(uname) != null)
+            {
+                User userData = this.dummyData.getUser(uname);
+                String result = "\nELO Score: "+ userData.getElo() + "\nWins: " + userData.getWins() + "\nLosses: " + userData.getLosses() + "\n";
+                return new Response(
+                        HttpStatus.OK,
+                        ContentType.JSON,
+                        "{ \"message\" : \"User stats:\"\n%s }".formatted(result)
+                );
+            }
+            else
+            {
+
+                return new Response(
+                        HttpStatus.NOT_FOUND,
+                        ContentType.JSON,
+                        "{ \"message\" : \"User not found\" }"
+                );
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return new Response(
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    ContentType.JSON,
+                    "{ \"message\" : \"Internal Server Error\" }"
             );
         }
     }

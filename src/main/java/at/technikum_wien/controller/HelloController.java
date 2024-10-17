@@ -1,4 +1,4 @@
-package at.technikum_wien.service;
+package at.technikum_wien.controller;
 
 import at.technikum_wien.httpserver.http.ContentType;
 import at.technikum_wien.httpserver.http.HttpStatus;

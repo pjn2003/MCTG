@@ -23,9 +23,11 @@ public class User {
 
     @Setter @Getter private String bio;
 
-    @Getter @Setter private int elo;
-    @Getter @Setter private int wins;
-    @Getter @Setter private int losses;
+    @Getter @Setter private Integer elo;
+    @Getter @Setter private Integer wins;
+    @Getter @Setter private Integer losses;
+
+    @Getter @Setter private boolean isAdmin=false;
 
     private ArrayList<Integer> userCards = new ArrayList<Integer>();
     private ArrayList<Integer> userDeck = new ArrayList<Integer>();

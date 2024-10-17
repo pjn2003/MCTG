@@ -1,5 +1,6 @@
 package at.technikum_wien.service;
 
+import at.technikum_wien.controller.UserController;
 import at.technikum_wien.httpserver.http.ContentType;
 import at.technikum_wien.httpserver.http.HttpStatus;
 import at.technikum_wien.httpserver.http.Method;
@@ -7,7 +8,6 @@ import at.technikum_wien.httpserver.server.Request;
 import at.technikum_wien.httpserver.server.Response;
 import at.technikum_wien.httpserver.server.Service;
 import at.technikum_wien.models.User;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
@@ -51,20 +51,28 @@ public UserService()
         }
     }
 
+    if (request.getMethod() == Method.GET && request.getPathParts().get(0).equals("stats") && request.getPathParts().size() ==2)
+    {
+            return this.userController.getUserStats(request.getPathParts().get(1));
+    }
+    else if (request.getPathParts().get(0).equals("users"))
+    {
+        if (request.getMethod() == Method.GET && request.getPathParts().size() > 1)
+        {
+            return this.userController.getUser(request.getPathParts().get(1));
+        }
+        else if (request.getMethod() == Method.POST && request.getPathParts().size() > 2)
+        {
+            return this.userController.createUser(request.getPathParts().get(1),request.getPathParts().get(2));
+        }
+        else if (request.getMethod() == Method.PUT && request.getPathParts().size() > 2)
+        {  // username / new bio
+            return this.userController.editUser(request.getPathParts().get(1),request.getPathParts().get(2));
+        }
+    }
 
 
-    if (request.getMethod() == Method.GET && request.getPathParts().size() > 1)
-    {
-        return this.userController.getUser(request.getPathParts().get(1));
-    }
-    else if (request.getMethod() == Method.POST && request.getPathParts().size() > 2)
-    {
-        return this.userController.createUser(request.getPathParts().get(1),request.getPathParts().get(2));
-    }
-    else if (request.getMethod() == Method.PUT && request.getPathParts().size() > 2)
-    {  // username / new bio
-        return this.userController.editUser(request.getPathParts().get(1),request.getPathParts().get(2));
-    }
+
     return new Response(
             HttpStatus.BAD_REQUEST, ContentType.JSON, "[]"
     );

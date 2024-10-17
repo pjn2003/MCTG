@@ -1,21 +1,16 @@
-package at.technikum_wien.service;
+package at.technikum_wien.controller;
 
+import at.technikum_wien.dummydata.UserDummyData;
 import at.technikum_wien.httpserver.http.ContentType;
 import at.technikum_wien.httpserver.http.HttpStatus;
 import at.technikum_wien.httpserver.server.Response;
-import at.technikum_wien.models.User;
 
-public class SessionController {
+public class SessionController extends Controller{
 
     private UserDummyData dummyData;
     public SessionController()
     {
-        this.dummyData = new UserDummyData();
-    }
-
-    public void addToDummyData(User user)
-    {
-        this.dummyData.addUser(user);
+        this.dummyData = new UserDummyData(true);
     }
 
     public Response login(String username, String password)

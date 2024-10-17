@@ -14,7 +14,7 @@ public class MonsterCard extends Card {
         setBaseDamage(baseDamage);
         setElement(element);
         setType(type);
-        System.out.println("Created monster card " + name + ", Damage: " + baseDamage + ", Element: " + element + ", Type: " + type);
+        //System.out.println("Created monster card " + name + ", Damage: " + baseDamage + ", Element: " + element + ", Type: " + type);
     }
 
     @Override

@@ -7,7 +7,7 @@ public class SpellCard extends Card{
         setName(name);
         setBaseDamage(baseDamage);
         setElement(element);
-        System.out.println("Created monster card " + name + ", Damage: " + baseDamage + ", Element: " + element);
+        //System.out.println("Created spell card " + name + ", Damage: " + baseDamage + ", Element: " + element);
     }
 
     @Override

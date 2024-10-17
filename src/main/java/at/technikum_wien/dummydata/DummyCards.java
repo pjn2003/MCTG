@@ -1,4 +1,4 @@
-package at.technikum_wien.service;
+package at.technikum_wien.dummydata;
 
 import at.technikum_wien.models.*;
 
@@ -18,6 +18,16 @@ public class DummyCards {
     private SpellCard poke = new SpellCard(6, "Poke",1,Element.Normal);
 
     private List<Card> dummyCards = new ArrayList<Card>();
+
+    public DummyCards()
+    {
+        this.dummyCards.add(dragon);
+        this.dummyCards.add(elf);
+        this.dummyCards.add(goblin);
+        this.dummyCards.add(fireball);
+        this.dummyCards.add(blizzard);
+        this.dummyCards.add(poke);
+    }
 
     public Card getCard(int id)
     {

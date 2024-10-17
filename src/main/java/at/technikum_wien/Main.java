@@ -31,15 +31,27 @@ public class Main {
         Router router = new Router();
         //router.addService("/users", new UserService());
         router.addService("/hello", new HelloService()); //Only for testing purposes
+
         UserService userService = new UserService();
         router.addService("/users", userService);
 
-        //Only to share users between users and session, will be replaced by database
-        SessionService sessionService = new SessionService(userService.getUserController().getDummyData());
+        router.addService("/sessions", new SessionService());
 
-        router.addService("/sessions", sessionService);
+        router.addService("/packages", new PackagesService());
 
+        router.addService("/transactions", new TransactionService());
 
+        router.addService("/cards", new CardsService());
+
+        router.addService("/deck", new DeckService());
+
+        router.addService("/stats", userService);
+
+        router.addService("/scoreboard", new ScoreboardService());
+
+        router.addService("/battles", new BattleService());
+
+        router.addService("/tradings", new TradingService());
         return router;
     }
 

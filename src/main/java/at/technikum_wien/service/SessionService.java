@@ -1,5 +1,6 @@
 package at.technikum_wien.service;
 
+import at.technikum_wien.controller.SessionController;
 import at.technikum_wien.httpserver.http.ContentType;
 import at.technikum_wien.httpserver.http.HttpStatus;
 import at.technikum_wien.httpserver.http.Method;
@@ -16,14 +17,7 @@ import java.util.Objects;
 public class SessionService implements Service{
     private final SessionController sessionController;
 
-    public SessionService(UserDummyData ud)
-    {
-        this.sessionController = new SessionController();
-        for (User user : ud.getUsers())
-        {
-            this.sessionController.addToDummyData(user);
-        }
-    }
+
     public SessionService()
     {
         this.sessionController = new SessionController();
