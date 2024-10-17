@@ -24,6 +24,7 @@ public class DeckController extends Controller {
     public Response createUserDeck(String uname, Integer c1, Integer c2, Integer c3, Integer c4)
     {
         if (this.dummyData.getUser(uname) != null) {
+
             ArrayList<Integer> newDeck = new ArrayList<Integer>();
             newDeck.add(c1);
             newDeck.add(c2);
@@ -58,19 +59,33 @@ public class DeckController extends Controller {
 
 
         if (this.dummyData.getUser(uname) != null) {
-            User user = this.dummyData.getUser(uname);
 
-            for(Integer id : user.getUserDeck())
+            if (this.dummyData.getUser(uname).getUserDeck().size() > 0) {
+
+                User user = this.dummyData.getUser(uname);
+
+                for(Integer id : user.getUserDeck())
+                {
+                    result += objectMapper.writeValueAsString(this.dummyCards.getCard(id));
+                }
+
+                return new Response(
+                        HttpStatus.OK,
+                        ContentType.JSON,
+                        result
+
+                );
+            }
+            else
             {
-                result += objectMapper.writeValueAsString(this.dummyCards.getCard(id));
+                return new Response(
+                        HttpStatus.NOT_FOUND,
+                        ContentType.JSON,
+                        "{ \"message\" : \"User deck is empty.\" }"
+                );
             }
 
-            return new Response(
-                    HttpStatus.OK,
-                    ContentType.JSON,
-                    result
 
-            );
 
         }
         }
