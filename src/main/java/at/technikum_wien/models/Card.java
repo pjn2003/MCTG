@@ -6,6 +6,7 @@ import lombok.Setter;
 
 public abstract class Card {
 
+    @Getter @Setter private int id;
 
     @Getter @Setter private String name;
 
@@ -16,7 +17,7 @@ public abstract class Card {
     @Getter @Setter private Element element;
 
 
-    public void Describe()
+    public void describe()
     {
         System.out.println("This is a card.");
     }

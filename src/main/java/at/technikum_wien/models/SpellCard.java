@@ -2,7 +2,8 @@ package at.technikum_wien.models;
 
 public class SpellCard extends Card{
 
-    public SpellCard(String name, int baseDamage, Element element) {
+    public SpellCard(int id, String name, int baseDamage, Element element) {
+        setId(id);
         setName(name);
         setBaseDamage(baseDamage);
         setElement(element);
@@ -10,7 +11,7 @@ public class SpellCard extends Card{
     }
 
     @Override
-    public void Describe()
+    public void describe()
     {
         System.out.println("Spell " + getName() + ", Damage: " + getBaseDamage() + ", Element: " + getElement());
     }

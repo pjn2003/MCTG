@@ -8,30 +8,26 @@ import lombok.Setter;
 @Getter
 @Setter
 public class User {
-    String username;
 
-    String password;
 
-    Integer coins;
+    @Setter @Getter
+    private String username;
 
+    @Setter @Getter
+    private String password;
+
+    @Setter @Getter private Integer coins;
+
+    @Setter @Getter private String bio;
 
     public User(String uname, String pass) {
-        username = uname;
-        password = pass;
+        setUsername(uname);
+        setPassword(pass);
         coins = 20;
+        bio = "";
     }
 
 
-    public void login(String pass) {
-        if (!password.equals(pass)) {
-            System.out.println("Password does not match!");
-        }
-        else
-        {
-            System.out.println("Verification successful!");
-            //Log in
-        }
-    }
 
 
 
