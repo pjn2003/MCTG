@@ -1,12 +1,9 @@
 package at.technikum_wien;
 
 
-import at.technikum_wien.businesslogic.BattleManager;
 import at.technikum_wien.httpserver.server.Server;
-import at.technikum_wien.httpserver.server.Service;
 import at.technikum_wien.httpserver.utils.Router;
-import at.technikum_wien.models.*;
-import at.technikum_wien.service.*;
+import at.technikum_wien.mtcgapp.service.*;
 
 import java.io.IOException;
 
@@ -26,10 +23,11 @@ public class Main {
         }
     }
 
+    //Create router and add services
     private static Router configureRouter()
     {
         Router router = new Router();
-        //router.addService("/users", new UserService());
+
         router.addService("/hello", new HelloService()); //Only for testing purposes
 
         UserService userService = new UserService();

@@ -1,14 +1,11 @@
 @startuml
 class User {
--string name;
--string password;
--int coins=20;
+-String Username;
+-String Password;
+-Integer coins=20;
 
--list cardInventory;
--list deck;
-+void login(string password);
-+void getDeck();
-+void buyCards();
+-List cardInventory;
+-List deck;
 }
 
 enum Element{
@@ -20,26 +17,40 @@ Normal
 abstract class Card
 {
 
--int tier;
--string name;
--int baseDamage;
+
+-String name;
+-Integer baseDamage;
 -Element element;
 
-+void describe();
+
 
 }
 
-class GameManager
+class BattleManager
 {
-    +void trade(User player1, User player2);
+
     +void battle(User player1, User player2);
 }
 
 class Main
 {
-    void resolveElement();
-    void resolveMonsterType();
-    void fight();
+
+}
+enum CardType
+{
+        Monster,
+        Spell
+}
+class TradeDeal
+{
+
+
+
+    -Integer tradeId;
+    -Card cardToTrade;
+    -CardType type;
+    -Integer minDamage;
+
 }
 
 
@@ -66,9 +77,19 @@ class SpellCard
 
 class Server
 {
-   Database userData;
-   List ranking;
+
 }
+
+class Service
+{
+
+}
+
+class Controller
+{
+
+}
+
 
 
 Card <|-- "extends" MonsterCard
@@ -80,7 +101,13 @@ Card "has one" *-- Element
 MonsterCard "has one" *-- MonsterType
 User "interacts with other users through" --* GameManager
 
-Main "Communicates with" --* Server
+Main "Starts and sets up" --* Server
+Server "Communicates with" --* BattleManager
 
+Controller "Performs actions for" --* Service
+Controller *-- "Is performed by" TradeDeal
+Service "Handles requests sent to" --* Server
+
+TradeDeal "asks for a specific" --* CardType
 
 @enduml
