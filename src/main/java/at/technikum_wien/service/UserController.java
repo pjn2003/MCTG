@@ -6,8 +6,10 @@ import at.technikum_wien.httpserver.http.HttpStatus;
 import at.technikum_wien.httpserver.server.Response;
 import at.technikum_wien.models.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.Getter;
+
 public class UserController extends Controller {
-    private UserDummyData dummyData;
+    @Getter private UserDummyData dummyData;
     public UserController()
     {
         this.dummyData = new UserDummyData();

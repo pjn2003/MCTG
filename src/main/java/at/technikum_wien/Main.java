@@ -31,8 +31,15 @@ public class Main {
         Router router = new Router();
         //router.addService("/users", new UserService());
         router.addService("/hello", new HelloService()); //Only for testing purposes
-        router.addService("/users", new UserService());
-        router.addService("/sessions", new SessionService());
+        UserService userService = new UserService();
+        router.addService("/users", userService);
+
+        //Only to share users between users and session, will be replaced by database
+        SessionService sessionService = new SessionService(userService.getUserController().getDummyData());
+
+        router.addService("/sessions", sessionService);
+
+
         return router;
     }
 

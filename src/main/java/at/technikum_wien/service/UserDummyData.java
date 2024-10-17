@@ -12,9 +12,9 @@ public class UserDummyData {
 
     public UserDummyData() {
         users = new ArrayList<User>();
-        users.add(new User("kienboec", "daniel"));
-        users.add(new User("altenhof", "markus"));
-        users.add(new User("admin", "istrator"));
+        users.add(new User("neuhold", "paul"));
+        users.add(new User("testaccount", "testpw"));
+        users.add(new User("admin2", "istrator2"));
 
     }
 
