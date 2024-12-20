@@ -1,0 +1,40 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+database DB
+actor User1
+actor User2
+entity battleManager
+control battle
+
+DB->User1: Login
+DB->User2: Login
+
+User1 -> User2 :challenge to battle
+
+User2 -> User1: accept battle
+
+
+User1 -> battleManager :send deck data
+User2 -> battleManager :send deck data
+
+battleManager->DB :Retrieve card attributes using deck card IDs
+battleManager->battle : conduct battle
+                    loop max 100 times
+                                battle->battle: Perform a round
+                            end
+
+
+battle->o battle: Determine winner (if no tie)
+battle->battleManager: Transmit result
+battleManager->User1: Grant rewards to winner
+battleManager->User2: Loser loses points
+
+User1->DB: Update user data
+User2->DB: Update user data
+
+DB->DB: Update rankings
+
+@enduml
