@@ -27,8 +27,11 @@ public class Server {
         try(ServerSocket serverSocket = new ServerSocket(this.port)) {
             while(true) {
                 final Socket clientConnection = serverSocket.accept();
-                final RequestHandler socketHandler = new RequestHandler(clientConnection, this.router);
-                executorService.submit(socketHandler);
+                //Start a new thread for multithreading
+                Thread t = new Thread(new RequestHandler(clientConnection, this.router));
+                t.start();
+                //final RequestHandler socketHandler = new RequestHandler(clientConnection, this.router);
+                //executorService.submit(t);
             }
         }
     }

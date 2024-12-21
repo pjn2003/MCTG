@@ -25,7 +25,7 @@ public UserService()
 
 @Override
     public Response handleRequest(Request request) {
-
+    System.out.println("Request received: " + request + " on thread: " + Thread.currentThread());
 
     if (Objects.equals(request.getHeaderMap().getHeader("Content-Type"), "application/json"))
     {//Creates user from JSON object (CURL Script)
@@ -41,6 +41,10 @@ public UserService()
                 User uData = new User(n.get("Username").asText(), n.get("Password").asText());
                 //System.out.println(uData.getUsername() + " " + uData.getPassword());
                 return this.userController.createUser(uData.getUsername(), uData.getPassword());
+            }
+            else if (request.getMethod() == Method.GET)
+            {
+                return this.userController.getUser(n.get("Username").asText());
             }
 
 
