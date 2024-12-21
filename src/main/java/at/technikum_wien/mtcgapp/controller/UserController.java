@@ -7,20 +7,47 @@ import at.technikum_wien.httpserver.server.Response;
 import at.technikum_wien.mtcgapp.models.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Arrays;
+
 public class UserController extends Controller {
-    private UserDummyData dummyData;
-    public UserController()
-    {
-        this.dummyData = new UserDummyData(false);
-    }
+
+
 
     //GET user with username
     public Response getUser(String uname)
     {
         try {
 
-            User userData = this.dummyData.getUser(uname);
-            String userJson = this.getObjectMapper().writeValueAsString(userData);
+
+            Connection con = connect();
+            String query = "SELECT * FROM mtcguser WHERE username=?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, uname);
+            ResultSet rs = ps.executeQuery();
+            User userData;
+            String userJson="";
+            if(rs.next())
+            {
+                userData = new User(rs.getString("username"),rs.getInt("coins"),rs.getString("bio"),
+                        rs.getInt("elo"),rs.getInt("wins"),
+                        rs.getInt("losses"),rs.getBoolean("is_admin"), (Integer[])rs.getArray("cards").getArray(),
+                        (Integer[])rs.getArray("deck").getArray());
+                userData.setPassword("Hidden");
+                userJson = this.getObjectMapper().writeValueAsString(userData);
+            }
+            else
+            {
+                return new Response(
+                        HttpStatus.NOT_FOUND,
+                        ContentType.JSON,
+                        "{ \"message\" : \"User not found.\" }"
+                );
+            }
+
             return new Response(
                     HttpStatus.OK,
                     ContentType.JSON,
@@ -34,6 +61,13 @@ public class UserController extends Controller {
                     ContentType.JSON,
                     "{ \"message\" : \"Internal Server Error\" }"
             );
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new Response(
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    ContentType.JSON,
+                    "{ \"message\" : \"Internal Server Error\" }"
+            );
         }
     }
     //POST user
@@ -41,7 +75,7 @@ public class UserController extends Controller {
     {
         try {
             User userData = new User(uname, password);
-            if(this.dummyData.getUser(uname) != null)
+            if(true)
             {
                 return new Response(
                         HttpStatus.CONFLICT,
@@ -51,7 +85,7 @@ public class UserController extends Controller {
             }
             else
             {
-                this.dummyData.addUser(userData);
+
                 return new Response(
                         HttpStatus.CREATED,
                         ContentType.JSON,
@@ -73,7 +107,7 @@ public class UserController extends Controller {
     public Response editUser(String uname, String newBio)
     {
         try {
-            this.dummyData.editUser(uname, newBio);
+
             return new Response(
                     HttpStatus.OK,
                     ContentType.JSON,
@@ -94,14 +128,14 @@ public class UserController extends Controller {
     {
         try {
 
-            if(this.dummyData.getUser(uname) != null)
+            if(true)
             {
-                User userData = this.dummyData.getUser(uname);
-                String result = "\nELO Score: "+ userData.getElo() + "\nWins: " + userData.getWins() + "\nLosses: " + userData.getLosses() + "\n";
+
+                //String result = "\nELO Score: "+ userData.getElo() + "\nWins: " + userData.getWins() + "\nLosses: " + userData.getLosses() + "\n";
                 return new Response(
                         HttpStatus.OK,
                         ContentType.JSON,
-                        "{ \"message\" : \"User stats:\"\n%s }".formatted(result)
+                        "{ \"message\" : \"User stats:\"\n%s }".formatted("amongus")
                 );
             }
             else

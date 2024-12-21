@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -42,6 +43,24 @@ public class User {
         setPassword(pass);
         coins = 20;
         bio = "";
+    }
+    public User(String uname, Integer coins, String bio, Integer elo, Integer wins, Integer losses, boolean isAdmin, Integer[] userCards, Integer[] userDeck) {
+        setUsername(uname);
+        setCoins(coins);
+        setBio(bio);
+        setElo(elo);
+        setWins(wins);
+        setLosses(losses);
+        setAdmin(isAdmin);
+        setUserCards(new ArrayList<>(Arrays.asList(userCards)));
+        setUserDeck(new ArrayList<>(Arrays.asList(userDeck)));
+
+
+    }
+
+    public void describeUser()
+    {
+        System.out.println("Username: " + getUsername() + "\nCoins: " + getCoins()+ "\nBio: " + getBio() + "\nElo: " +getElo() + "\nWins: " + getWins() + "\nLosses: " + getLosses() + "\nAdmin: " + isAdmin() + "\nCards: " + getUserCards() + "\nDeck: " + getUserDeck());
     }
 
     public void addCardToInventory(int id)

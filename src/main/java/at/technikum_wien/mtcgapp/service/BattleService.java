@@ -25,7 +25,7 @@ public class BattleService implements Service {
             return new Response(
                     HttpStatus.OK,
                     ContentType.JSON,
-                    "{ \"message\" : \"Entered battle lobby!\" }"
+                    "{ \"message\" : \"Entered battle!\" }"
             );
         }
 

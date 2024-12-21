@@ -11,16 +11,12 @@ public abstract class Card {
     @Getter @Setter private String name;
 
 
-
     @Getter @Setter private int baseDamage;
 
     @Getter @Setter private Element element;
+    public void describe() { }
 
 
-    public void describe()
-    {
-        System.out.println("This is a card.");
-    }
 
 
 
