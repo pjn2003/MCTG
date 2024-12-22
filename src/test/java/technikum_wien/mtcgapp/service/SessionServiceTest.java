@@ -1,26 +1,26 @@
-package at.technikum_wien.mtcgapp.service;
+package technikum_wien.mtcgapp.service;
 
-import at.technikum_wien.mtcgapp.controller.SessionController;
-import at.technikum_wien.httpserver.http.ContentType;
-import at.technikum_wien.httpserver.http.HttpStatus;
-import at.technikum_wien.httpserver.http.Method;
-import at.technikum_wien.httpserver.server.Request;
-import at.technikum_wien.httpserver.server.Response;
-import at.technikum_wien.httpserver.server.Service;
-import at.technikum_wien.mtcgapp.models.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import technikum_wien.httpserver.http.ContentType;
+import technikum_wien.httpserver.http.HttpStatus;
+import technikum_wien.httpserver.http.Method;
+import technikum_wien.httpserver.server.Request;
+import technikum_wien.httpserver.server.Response;
+import technikum_wien.httpserver.server.Service;
+import technikum_wien.mtcgapp.controller.SessionControllerTestTest;
+import technikum_wien.mtcgapp.models.User;
 
 import java.io.IOException;
 import java.util.Objects;
 
-public class SessionService implements Service{
-    private final SessionController sessionController;
+public class SessionServiceTest implements Service {
+    private final SessionControllerTestTest sessionControllerTest;
 
 
-    public SessionService()
+    public SessionServiceTest()
     {
-        this.sessionController = new SessionController();
+        this.sessionControllerTest = new SessionControllerTestTest();
     }
 
     @Override
@@ -39,7 +39,7 @@ public class SessionService implements Service{
                 {
                     User uData = new User(n.get("Username").asText(), n.get("Password").asText());
                     //System.out.println(uData.getUsername() + " " + uData.getPassword());
-                    return this.sessionController.login(uData.getUsername(), uData.getPassword());
+                    return this.sessionControllerTest.login(uData.getUsername(), uData.getPassword());
                 }
 
 
@@ -53,7 +53,7 @@ public class SessionService implements Service{
 
         //Login using path parts, Usage: /String username/String password
         if (request.getMethod() == Method.POST && request.getPathParts().size() > 2) {
-            return this.sessionController.login(request.getPathParts().get(1),request.getPathParts().get(2));
+            return this.sessionControllerTest.login(request.getPathParts().get(1),request.getPathParts().get(2));
         }
 
 

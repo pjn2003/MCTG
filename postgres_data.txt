@@ -17,3 +17,11 @@ psql -U postgres
 -Alternative:
 
 docker exec -it postgresdb psql -U postgres -h localhost -d postgres -P
+
+
+EXPORT DATABASE:
+-after entering bash, enter this command:
+
+pg_dump -U postgres mtcgdb > mtcgexport.sql
+
+-Then, go to container and the file should be there

@@ -1,19 +1,17 @@
-package at.technikum_wien.mtcgapp.controller;
+package technikum_wien.mtcgapp.controller;
 
-import at.technikum_wien.mtcgapp.dummydata.UserDummyData;
-import at.technikum_wien.httpserver.http.ContentType;
-import at.technikum_wien.httpserver.http.HttpStatus;
-import at.technikum_wien.httpserver.server.Response;
-import at.technikum_wien.mtcgapp.models.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import technikum_wien.httpserver.http.ContentType;
+import technikum_wien.httpserver.http.HttpStatus;
+import technikum_wien.httpserver.server.Response;
+import technikum_wien.mtcgapp.models.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 
-public class UserController extends Controller {
+public class UserControllerTestTest extends ControllerTest {
 
 
 

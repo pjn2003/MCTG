@@ -1,26 +1,26 @@
-package at.technikum_wien.mtcgapp.service;
+package technikum_wien.mtcgapp.service;
 
-import at.technikum_wien.mtcgapp.controller.UserController;
-import at.technikum_wien.httpserver.http.ContentType;
-import at.technikum_wien.httpserver.http.HttpStatus;
-import at.technikum_wien.httpserver.http.Method;
-import at.technikum_wien.httpserver.server.Request;
-import at.technikum_wien.httpserver.server.Response;
-import at.technikum_wien.httpserver.server.Service;
-import at.technikum_wien.mtcgapp.models.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
+import technikum_wien.httpserver.http.ContentType;
+import technikum_wien.httpserver.http.HttpStatus;
+import technikum_wien.httpserver.http.Method;
+import technikum_wien.httpserver.server.Request;
+import technikum_wien.httpserver.server.Response;
+import technikum_wien.httpserver.server.Service;
+import technikum_wien.mtcgapp.controller.UserControllerTestTest;
+import technikum_wien.mtcgapp.models.User;
 
 import java.io.IOException;
 import java.util.Objects;
 
-public class UserService implements Service {
+public class UserServiceTest implements Service {
 
-@Getter private final UserController userController;
-public UserService()
+@Getter private final UserControllerTestTest userControllerTest;
+public UserServiceTest()
 {
-    this.userController = new UserController();
+    this.userControllerTest = new UserControllerTestTest();
 }
 
 @Override
@@ -40,11 +40,11 @@ public UserService()
             {
                 User uData = new User(n.get("Username").asText(), n.get("Password").asText());
                 //System.out.println(uData.getUsername() + " " + uData.getPassword());
-                return this.userController.createUser(uData.getUsername(), uData.getPassword());
+                return this.userControllerTest.createUser(uData.getUsername(), uData.getPassword());
             }
             else if (request.getMethod() == Method.GET)
             {
-                return this.userController.getUser(n.get("Username").asText());
+                return this.userControllerTest.getUser(n.get("Username").asText());
             }
 
 
@@ -57,22 +57,22 @@ public UserService()
     //Returns user stats, Usage: /stats/String username - For this, /users does not need to be added
     if (request.getMethod() == Method.GET && request.getPathParts().get(0).equals("stats") && request.getPathParts().size() ==2)
     {
-            return this.userController.getUserStats(request.getPathParts().get(1));
+            return this.userControllerTest.getUserStats(request.getPathParts().get(1));
     }//Regular /users responses
     else if (request.getPathParts().get(0).equals("users"))
     {
         //Returns a user, Usage: /String username
         if (request.getMethod() == Method.GET && request.getPathParts().size() > 1)
         {
-            return this.userController.getUser(request.getPathParts().get(1));
+            return this.userControllerTest.getUser(request.getPathParts().get(1));
         }//Creates a user, Usage: /String username/String password
         else if (request.getMethod() == Method.POST && request.getPathParts().size() > 2)
         {
-            return this.userController.createUser(request.getPathParts().get(1),request.getPathParts().get(2));
+            return this.userControllerTest.createUser(request.getPathParts().get(1),request.getPathParts().get(2));
         }//Changes a user's bio, Usage: /String username/String newBio
         else if (request.getMethod() == Method.PUT && request.getPathParts().size() > 2)
         {
-            return this.userController.editUser(request.getPathParts().get(1),request.getPathParts().get(2));
+            return this.userControllerTest.editUser(request.getPathParts().get(1),request.getPathParts().get(2));
         }
     }
 

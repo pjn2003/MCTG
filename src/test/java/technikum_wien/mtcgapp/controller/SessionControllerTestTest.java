@@ -1,19 +1,18 @@
-package at.technikum_wien.mtcgapp.controller;
+package technikum_wien.mtcgapp.controller;
 
-import at.technikum_wien.mtcgapp.dummydata.UserDummyData;
-import at.technikum_wien.httpserver.http.ContentType;
-import at.technikum_wien.httpserver.http.HttpStatus;
-import at.technikum_wien.httpserver.server.Response;
+import technikum_wien.httpserver.http.ContentType;
+import technikum_wien.httpserver.http.HttpStatus;
+import technikum_wien.httpserver.server.Response;
+import technikum_wien.mtcgapp.dummydata.UserDummyData;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
-public class SessionController extends Controller{
+public class SessionControllerTestTest extends ControllerTest {
 
     private UserDummyData dummyData;
-    public SessionController()
+    public SessionControllerTestTest()
     {
         this.dummyData = new UserDummyData(true);
     }
