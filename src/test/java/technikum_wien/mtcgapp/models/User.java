@@ -32,7 +32,7 @@ public class User {
     private ArrayList<Integer> userCards = new ArrayList<Integer>();
     private ArrayList<Integer> userDeck = new ArrayList<Integer>();
 
-
+    private Integer[] cardsInStore;
 
 
 
@@ -57,23 +57,62 @@ public class User {
 
     }
 
-    public void describeUser()
+    public String describeUser()
     {
-        System.out.println("Username: " + getUsername() + "\nCoins: " + getCoins()+ "\nBio: " + getBio() + "\nElo: " +getElo() + "\nWins: " + getWins() + "\nLosses: " + getLosses() + "\nAdmin: " + isAdmin() + "\nCards: " + getUserCards() + "\nDeck: " + getUserDeck());
+        String res = "Username: " + getUsername() + "\nCoins: " + getCoins()+ "\nBio: " + getBio() + "\nElo: " +getElo() + "\nWins: " + getWins() + "\nLosses: " + getLosses() + "\nAdmin: " + isAdmin() + "\nCards: " + getUserCards() + "\nDeck: " + getUserDeck();
+        System.out.println(res);
+        return res;
     }
+
 
     public void addCardToInventory(int id)
     {
         userCards.add(id);
     }
+    public void removeCardFromInventory(int id) {
+        userCards.remove(Integer.valueOf(id));
+    }
+    public void addCardToStore(int id)
+    {
+        cardsInStore[cardsInStore.length-1] = id;
+    }
+    public void removeCardFromStore(int id)
+    {
+        for (int i = 0; i < cardsInStore.length; i++)
+        {
+            if (cardsInStore[i] == id)
+                cardsInStore[i]=null;
+        }
+    }
+    public boolean isCardForTrade(int id)
+    {
+        for (int i = 0; i < cardsInStore.length; i++)
+        {
+            if (cardsInStore[i] == id)
+                return true;
+        }
+        return false;
+    }
 
     public Integer getCardFromInv(int id)
     {
-        return userCards.get(id);
+
+        for (int i = 0; i < userCards.size(); i++)
+        {
+            if (userCards.get(i) == id)
+                return userCards.get(i);
+        }
+
+        return null;
     }
 
-    public void makeDeck(int [] ids)
+    public String makeDeck(int [] ids)
     {
+        if (ids.length != 4)
+        {
+
+            return "Deck size cannot exceed 4!";
+        }
         ArrayList<Integer> tempDeck = new ArrayList<Integer>();
         for (int i = 0; i < ids.length; i++) //For each id, check if the user owns that card
         {
@@ -83,10 +122,11 @@ public class User {
             }
             else
             {
-                return;
+                return "Card(s) not owned!";
             }
         }
         userDeck = tempDeck;
+        return "OK";
     }
 
 

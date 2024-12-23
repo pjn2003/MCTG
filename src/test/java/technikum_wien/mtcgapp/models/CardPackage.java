@@ -12,11 +12,19 @@ public class CardPackage {
     private String packName;
 
     @Getter @Setter
-    private List<Integer> cardList = new ArrayList<Integer>(); //List of cards in the package
+    private Integer[] cardList; //List of cards in the package
 
-    public CardPackage(String packName, List<Integer> cardList) {
+    public CardPackage(String packName, Integer[] cardList) {
         this.packName = packName;
         this.cardList = cardList;
+    }
+
+    public String getPack()
+    {
+        String result = getPackName() + "\n";
+        for (int i = 0; i < cardList.length; i++)
+            result += cardList[i] + "\n";
+        return result;
     }
 
 

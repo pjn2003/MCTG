@@ -5,26 +5,32 @@ import lombok.Getter;
 @Getter
 public class TradeDeal {
 
-    public enum CardType
-    {
-        Monster,
-        Spell
-    }
+
 
     @Getter
     private Integer dealId;
     @Getter
-    private Card cardToTrade;
+    private Integer cardToTrade;
     @Getter
-    private CardType cardType;
+    private String cardType;
     @Getter
     private Integer minDamage;
+    @Getter
+    private String username;
 
-    public TradeDeal(Integer dealId, Card cardToTrade, CardType cardType, Integer minDamage) {
+    public String printDeal()
+    {
+        String desc = "Deal " + dealId + " | Card offered: " + cardToTrade + ", Minimum Damage Wanted: " + minDamage + ", Looking for card of type: " + cardType + ", posted by "+username;
+        System.out.println(desc);
+        return desc;
+    }
+
+    public TradeDeal(Integer dealId, Integer cardToTrade, String cardType, Integer minDamage, String username) {
         this.dealId = dealId;
         this.cardToTrade = cardToTrade;
         this.cardType = cardType;
         this.minDamage = minDamage;
+        this.username = username;
     }
 
 

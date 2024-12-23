@@ -33,6 +33,7 @@ public class User {
     private ArrayList<Integer> userCards = new ArrayList<Integer>();
     private ArrayList<Integer> userDeck = new ArrayList<Integer>();
 
+    private Integer[] cardsInStore;
 
 
 
@@ -67,6 +68,27 @@ public class User {
     {
         userCards.add(id);
     }
+    public void addCardToStore(int id)
+    {
+        cardsInStore[cardsInStore.length-1] = id;
+    }
+    public void removeCardFromStore(int id)
+    {
+        for (int i = 0; i < cardsInStore.length; i++)
+        {
+            if (cardsInStore[i] == id)
+                cardsInStore[i]=null;
+        }
+    }
+    public boolean isCardForTrade(int id)
+    {
+        for (int i = 0; i < cardsInStore.length; i++)
+        {
+            if (cardsInStore[i] == id)
+                return true;
+        }
+        return false;
+    }
 
     public Integer getCardFromInv(int id)
     {
@@ -78,8 +100,9 @@ public class User {
         ArrayList<Integer> tempDeck = new ArrayList<Integer>();
         for (int i = 0; i < ids.length; i++) //For each id, check if the user owns that card
         {
-            if (getCardFromInv(ids[i])!=null)
+            if (getCardFromInv(ids[i])!=null && !isCardForTrade(ids[i]))
             {
+
                 tempDeck.add(ids[i]);
             }
             else

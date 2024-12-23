@@ -26,9 +26,8 @@ public class DummyPackages {
     }
 
     public void addPackage(String name, Integer[] p) {
-        List<Integer> newPackList = new ArrayList<Integer>();
-        newPackList.addAll(Arrays.asList(p));
-        CardPackage cardPackage = new CardPackage(name, newPackList);
+
+        CardPackage cardPackage = new CardPackage(name, p);
 
         this.packages.add(cardPackage);
         //System.out.println(printPackages());
@@ -38,8 +37,8 @@ public class DummyPackages {
     {
         String result = "";
         for (int i = 0; i < packages.size(); i++) {
-            for (int j = 0; j < packages.get(i).getCardList().size(); j++)
-                result += packages.get(i).getPackName()+ ", Card " + j + ": " + dummyCards.getCard(packages.get(i).getCardList().get(j)).getName() + "\n";
+            for (int j = 0; j < packages.get(i).getCardList().length; j++)
+                result += packages.get(i).getPackName()+ ", Card " + j + ": " + dummyCards.getCard(packages.get(i).getCardList()[j]).getName() + "\n";
         }
         return result;
     }

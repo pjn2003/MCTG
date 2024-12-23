@@ -20,6 +20,7 @@ public class BattleManagerTest {
         System.out.println("Starting fight between: " + user1 + " and " + user2);
     }
 
+    //Special interactions
     boolean doesMonsterLose(MonsterCard card1, MonsterCard card2)
     {
         if (card1.getType() == MonsterType.Goblin && card2.getType() == MonsterType.Dragon ||
@@ -50,6 +51,7 @@ public class BattleManagerTest {
         return false;
     }
 
+    //Elemental effectiveness
     public static float resolveElements(Element attack, Element defense)
     {
         if (
@@ -80,6 +82,7 @@ public class BattleManagerTest {
     Element f = Element.Fire;
     Element w = Element.Water;
     Element n = Element.Normal;
+
     //Unit tests: Check if element effectiveness was properly implemented
     @Test
     public void testSameElement()
@@ -120,10 +123,11 @@ public class BattleManagerTest {
 
     }
 
-    @Test //Unit test: Conduct a battle and test it
+    @Test //Unit test: Conduct a battle
     public void conductBattle()
     {
         int roundCounter;
+        int winner=0;
         ArrayList<Integer> deck1 = user1.getUserDeck();
         ArrayList<Integer> deck2 = user2.getUserDeck();
         Random rand = new Random();
@@ -136,7 +140,7 @@ public class BattleManagerTest {
             Integer rand2 = rand.nextInt(deck2.size());
             if (rand2 > deck2.size())
                 rand2 = deck2.size() - 1;
-            System.out.println("---# ROUND " + roundCounter + " #---");
+            System.out.println("\n---#|> ROUND " + roundCounter + " <|#---\n");
             System.out.println("Player 1's deck: " + deck1.size());
             System.out.println("Player 2's deck: " + deck2.size());
             Integer card1id = deck1.get(rand1);
@@ -148,11 +152,13 @@ public class BattleManagerTest {
 
             if (deck1.isEmpty())
             {
+                winner=2;
                 System.out.println(user1.getUsername() + " has no cards left. " + user2.getUsername() + " has won the fight!");
                 break;
             }
             else if (deck2.isEmpty())
             {
+                winner=1;
                 System.out.println(user2.getUsername() + " has no cards left. " + user1.getUsername() + " has won the fight!");
                 break;
             }
@@ -163,12 +169,15 @@ public class BattleManagerTest {
             }
         }
 
-        //This battle should always end with Jim winning, meaning no draw occurs
+        //This battle should always end with Jim winning
+        assertEquals(winner, 2);
         assertNotSame(roundCounter,100);
 
 
     }
 
+
+    //For other scripts to use
     public int Battle(User user1, User user2)
     {
         int roundCounter;
@@ -184,7 +193,7 @@ public class BattleManagerTest {
             Integer rand2 = rand.nextInt(deck2.size());
             if (rand2 > deck2.size())
                 rand2 = deck2.size() - 1;
-            System.out.println("---# ROUND " + roundCounter + " #---");
+            System.out.println("\n---#|> ROUND " + roundCounter + " <|#---\n");
             System.out.println("Player 1's deck: " + deck1.size());
             System.out.println("Player 2's deck: " + deck2.size());
             Integer card1id = deck1.get(rand1);
@@ -231,7 +240,7 @@ public class BattleManagerTest {
             {
                 deck1.remove((Integer) card1.getId());
                 deck2.add(card1.getId());
-                return card2.getName() + " wins!";
+                return "\n"+card2.getName() + " wins!";
             }
             else
             {
@@ -240,7 +249,7 @@ public class BattleManagerTest {
                 {
                     deck2.remove((Integer) card2.getId());
                     deck1.add(card2.getId());
-                    return card1.getName() + " wins!";
+                    return "\n" + card1.getName() + " wins!";
                 }
             }
 
@@ -254,7 +263,7 @@ public class BattleManagerTest {
                 {
                     deck1.remove((Integer) card1.getId());
                     deck2.add(card1.getId());
-                    return card2.getName() + " wins!";
+                    return "\n" +card2.getName() + " wins!";
                 }
             }
             else if (card2 instanceof SpellCard && card1 instanceof MonsterCard)
@@ -263,7 +272,7 @@ public class BattleManagerTest {
                 {
                     deck2.remove((Integer) card2.getId());
                     deck1.add(card2.getId());
-                    return card1.getName() + " wins!";
+                    return "\n" +card1.getName() + " wins!";
                 }
             }
         }
@@ -285,14 +294,14 @@ public class BattleManagerTest {
         {
             deck2.remove((Integer) card2.getId());
             deck1.add(card2.getId());
-            return card1.getName() + " wins!";
+            return "\n" +card1.getName() + " wins!";
 
         }
         else if (dmg2 > dmg)
         {
             deck1.remove((Integer) card1.getId());
             deck2.add(card1.getId());
-            return card2.getName() + " wins!";
+            return "\n" +card2.getName() + " wins!";
         }
         else if (dmg == dmg2)
         {

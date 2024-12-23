@@ -11,8 +11,9 @@ public class SpellCard extends Card {
     }
 
     @Override
-    public void describe()
+    public String describe()
     {
         System.out.println("Spell " + getName() + ", Damage: " + getBaseDamage() + ", Element: " + getElement());
+        return null;
     }
 }

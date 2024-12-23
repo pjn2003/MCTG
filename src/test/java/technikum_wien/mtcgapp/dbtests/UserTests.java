@@ -17,11 +17,42 @@ public class UserTests extends ControllerTest {
     public static Connection con;
     BattleManagerTest battleManagerTest = new BattleManagerTest();
 
+    public User user = new User("Jim", 20, "The Jimster", 0,0,125,false, new Integer[]{1,2,4, 6, 8,9,16}, new Integer[]{2,4,6,8});
+
     @BeforeAll
     public static void setUp() throws Exception {
         con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mtcgdb?user=postgres&password=postgres");
     }
 
+    //Unit tests
+    @Test
+    public void TestDeckCreation() {
+
+        assertEquals("Card(s) not owned!",user.makeDeck(new int[]{10, 15, 12, 30}));
+        System.out.println(user.makeDeck(new int[]{10, 15, 12, 30}));
+        assertEquals("Deck size cannot exceed 4!",user.makeDeck(new int[]{2,4,6,8,9}));
+        System.out.println(user.makeDeck(new int[]{2,4,6,8,9}));
+        assertEquals("OK",user.makeDeck(new int[]{2, 4, 6, 8}));
+        System.out.println(user.makeDeck(new int[]{2, 4, 6, 8}));
+    }
+    @Test
+    public void TestDescribeUser() {
+        assertEquals("Username: Jim\n" +
+                "Coins: 20\n" +
+                "Bio: The Jimster\n" +
+                "Elo: 0\n" +
+                "Wins: 0\n" +
+                "Losses: 125\n" +
+                "Admin: false\n" +
+                "Cards: [1, 2, 4, 6, 8, 9, 16]\n" +
+                "Deck: [2, 4, 6, 8]",user.describeUser());
+    }
+
+
+
+
+
+    //Integration tests
 
     @Test //Test user fetching
     public void TestGetUser() throws SQLException {
@@ -83,7 +114,7 @@ public class UserTests extends ControllerTest {
 
     }
 
-    @Test
+    @Test //Creates a scoreboard ordered by elo
     public void TestScoreboard() throws SQLException {
         System.out.println("Scoreboard: ");
         String query = "SELECT * FROM mtcguser ORDER BY elo DESC";
@@ -100,7 +131,7 @@ public class UserTests extends ControllerTest {
         rs.close();
     }
 
-    @Test
+    @Test //Converts all cards owned by a user into the Card model, then prints their attributes out
     public void TestCardIds() throws SQLException {
         String query = "SELECT * FROM mtcguser WHERE username=?";
 
