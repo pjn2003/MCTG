@@ -64,7 +64,8 @@ CREATE TABLE public.mtcguser (
     losses integer,
     is_admin boolean,
     cards integer[],
-    deck integer[]
+    deck integer[],
+    cardsinstore integer[]
 );
 
 
@@ -78,7 +79,8 @@ CREATE TABLE public.tradedeals (
     dealid integer NOT NULL,
     cardid integer,
     card_type character varying(32),
-    card_mindmg integer
+    card_mindmg integer,
+    username character varying(32)
 );
 
 
@@ -97,9 +99,6 @@ COPY public.cardpacks (id, packname, card_list) FROM stdin;
 --
 
 COPY public.cards (id, name, basedamage, element, cardtype, monstertype) FROM stdin;
-3	Fireball	6	Fire	Spell	\N
-1	Wood Goblin	1	Normal	Monster	Goblin
-2	Forest Elf	3	Normal	Monster	Elf
 4	Steel Knight	16	Normal	Monster	Knight
 5	Frost Wyvern	32	Water	Monster	Dragon
 6	Xavier the Volcano Lord	25	Fire	Monster	Elf
@@ -119,6 +118,9 @@ COPY public.cards (id, name, basedamage, element, cardtype, monstertype) FROM st
 20	Tsunami	31	Water	Spell	\N
 21	Omega Cannon	500	Normal	Spell	\N
 22	Spark	1	Fire	Spell	\N
+3	Wood Goblin	1	Normal	Monster	Goblin
+1	Forest Elf	3	Normal	Monster	Elf
+2	Fireball	6	Fire	Spell	\N
 \.
 
 
@@ -126,11 +128,11 @@ COPY public.cards (id, name, basedamage, element, cardtype, monstertype) FROM st
 -- Data for Name: mtcguser; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.mtcguser (username, password, coins, bio, elo, wins, losses, is_admin, cards, deck) FROM stdin;
-altenhof	markus	20	\N	358	160	34	\N	{1,3,5,7,9}	{3,5,7,9}
-kienboec	daniel	20	\N	120	45	67	\N	{2,4,3,9}	{2,4,3,9}
-admin	istrator	20	\N	679	237	3	\N	{2,4,6,8}	{2,4,6,8}
-test_user	abcdef123	20	I am a test user	984	100	30	t	{1,2,3,4,5,6}	{1,2,3,4}
+COPY public.mtcguser (username, password, coins, bio, elo, wins, losses, is_admin, cards, deck, cardsinstore) FROM stdin;
+altenhof	markus	20	\N	358	160	34	\N	{1,3,5,7,9}	{3,5,7,9}	\N
+kienboec	daniel	20	\N	120	45	67	\N	{2,4,3,9}	{2,4,3,9}	\N
+admin	istrator	20	\N	712	248	3	\N	{2,4,6,8}	{2,4,6,8}	\N
+test_user	abcdef123	20	I am a test user	929	100	41	t	{1,2,3,4,5,6}	{1,2,3,4}	\N
 \.
 
 
@@ -138,7 +140,9 @@ test_user	abcdef123	20	I am a test user	984	100	30	t	{1,2,3,4,5,6}	{1,2,3,4}
 -- Data for Name: tradedeals; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.tradedeals (dealid, cardid, card_type, card_mindmg) FROM stdin;
+COPY public.tradedeals (dealid, cardid, card_type, card_mindmg, username) FROM stdin;
+1	5	Spell	30	test_user
+2	6	Monster	20	test_user
 \.
 
 
