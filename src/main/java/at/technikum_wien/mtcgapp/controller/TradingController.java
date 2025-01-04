@@ -23,10 +23,6 @@ public class TradingController extends Controller {
         deals = new ArrayList<>();
         cards = new DummyCards();
         objectMapper = new ObjectMapper();
-        //Dummy data
-        deals.add(new TradeDeal(1, cards.getCard(2), TradeDeal.CardType.Monster,20 ));
-        deals.add(new TradeDeal(2, cards.getCard(1), TradeDeal.CardType.Monster,4 ));
-        deals.add(new TradeDeal(3, cards.getCard(5), TradeDeal.CardType.Spell,10 ));
 
     }
 
@@ -80,6 +76,7 @@ public class TradingController extends Controller {
         if (cards.getCard(cardId)!=null)
         {
 
+            /*
             TradeDeal.CardType carType = TradeDeal.CardType.Monster;
             if (cType.equals("Spell"))
                 carType = TradeDeal.CardType.Spell;
@@ -92,6 +89,7 @@ public class TradingController extends Controller {
 
             TradeDeal td = new TradeDeal(highestId+1,cards.getCard(cardId),carType, minDmg);
             deals.add(td);
+            */
             return new Response(
                     HttpStatus.CREATED,
                     ContentType.JSON,

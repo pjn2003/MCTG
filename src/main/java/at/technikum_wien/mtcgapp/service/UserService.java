@@ -28,7 +28,7 @@ public UserService()
     System.out.println("User request received: " + request + " on thread: " + Thread.currentThread());
 
     if (Objects.equals(request.getHeaderMap().getHeader("Content-Type"), "application/json"))
-    {//Creates user from JSON object (CURL Script)
+    {//Creates user from JSON object
         try {
 
             String json = request.getBody();
@@ -46,6 +46,10 @@ public UserService()
             {
                 return this.userController.getUser(n.get("Username").asText());
             }
+            else if (request.getMethod() == Method.PUT)
+            {
+                return this.userController.editUser(n.get("Username").asText(), n.get("Bio").asText());
+            }
 
 
 
@@ -54,6 +58,10 @@ public UserService()
             throw new RuntimeException(e);
         }
     }
+
+
+
+
     //Returns user stats, Usage: /stats/String username - For this, /users does not need to be added
     if (request.getMethod() == Method.GET && request.getPathParts().get(0).equals("stats") && request.getPathParts().size() ==2)
     {

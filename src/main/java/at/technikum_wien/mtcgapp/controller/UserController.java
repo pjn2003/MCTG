@@ -102,10 +102,32 @@ public class UserController extends Controller {
         }
     }
 
-
+    //Update user bio
     public Response editUser(String uname, String newBio)
     {
         try {
+            Connection con = connect();
+
+            //First, check if the user exists
+            String query = "SELECT * FROM mtcguser WHERE username=?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, uname);
+            ps.executeQuery();
+            if (!ps.getResultSet().next())
+            {
+                return new Response(
+                        HttpStatus.NOT_FOUND,
+                        ContentType.JSON,
+                        "{ \"message\" : \"User not found!\" }"
+                );
+            }
+
+            query = "UPDATE mtcguser SET bio=? WHERE username=?";
+
+            ps = con.prepareStatement(query);
+            ps.setString(2, uname);
+            ps.setString(1, newBio);
+            ps.executeUpdate();
 
             return new Response(
                     HttpStatus.OK,

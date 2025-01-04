@@ -39,6 +39,35 @@ public class BattleManager {
         return false;
     }
 
+    //Elemental effectiveness
+    public static float resolveElements(Element attack, Element defense)
+    {
+        if (
+                attack == Element.Fire && defense == Element.Normal ||
+                        attack == Element.Water && defense == Element.Fire ||
+                        attack == Element.Normal && defense == Element.Water
+
+        )
+        {
+            System.out.println("It's super effective!");
+            return 2; //Effective
+        }
+        else if (
+                attack == Element.Normal && defense == Element.Fire ||
+                        attack == Element.Fire && defense == Element.Water ||
+                        attack == Element.Water && defense == Element.Normal
+
+        )
+        {
+            System.out.println("It's not very effective...");
+            return 0.5f; //Not effective
+        }
+        else
+        {
+            return 1; //Same element
+        }
+    }
+
     public int Battle(User user1, User user2)
     {
         if (user1.getUserDeck().size() < 4 || user2.getUserDeck().size() < 4)
