@@ -20,21 +20,21 @@ public class CardTests {
 
     //Unit Tests
 
-    @Test
+    @Test //1
     public void testCardDescribe()
     {
         MonsterCard m = new MonsterCard(0,"Alfred",10,Element.Normal,MonsterType.Knight);
         assertEquals("Monster Alfred, Damage: 10, Element: Normal, Type: Knight",m.describe());
     }
 
-    @Test
+    @Test //2
     public void testTradeDealDescription()
     {
         TradeDeal td = new TradeDeal(0,8,"Spell",5,"Jim");
         assertEquals(td.printDeal(),"Deal 0 | Card offered: 8, Minimum Damage Wanted: 5, Looking for card of type: Spell, posted by Jim");
     }
 
-    @Test
+    @Test //3
     public void packageTest()
     {
         CardPackage p = new CardPackage("Beginner Pack",new Integer[]{1,2,3,4,5});

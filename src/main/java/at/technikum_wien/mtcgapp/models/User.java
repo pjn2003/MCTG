@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 
 @Getter
@@ -38,7 +37,6 @@ public class User {
 
 
 
-
     public User(String uname, String pass) {
         setUsername(uname);
         setPassword(pass);
@@ -59,14 +57,20 @@ public class User {
 
     }
 
-    public void describeUser()
+    public String describeUser()
     {
-        System.out.println("Username: " + getUsername() + "\nCoins: " + getCoins()+ "\nBio: " + getBio() + "\nElo: " +getElo() + "\nWins: " + getWins() + "\nLosses: " + getLosses() + "\nAdmin: " + isAdmin() + "\nCards: " + getUserCards() + "\nDeck: " + getUserDeck());
+        String res = "Username: " + getUsername() + "\nCoins: " + getCoins()+ "\nBio: " + getBio() + "\nElo: " +getElo() + "\nWins: " + getWins() + "\nLosses: " + getLosses() + "\nAdmin: " + isAdmin() + "\nCards: " + getUserCards() + "\nDeck: " + getUserDeck();
+        System.out.println(res);
+        return res;
     }
+
 
     public void addCardToInventory(int id)
     {
         userCards.add(id);
+    }
+    public void removeCardFromInventory(int id) {
+        userCards.remove(Integer.valueOf(id));
     }
     public void addCardToStore(int id)
     {
@@ -92,25 +96,42 @@ public class User {
 
     public Integer getCardFromInv(int id)
     {
-        return userCards.get(id);
+
+        for (int i = 0; i < userCards.size(); i++)
+        {
+            if (userCards.get(i) == id)
+                return userCards.get(i);
+        }
+
+        return null;
     }
 
-    public void makeDeck(int [] ids)
+    public String makeDeck(int [] ids)
     {
+        if (getUserCards().size() < 4)
+        {
+            return "You do not have enough cards!";
+        }
+
+        if (ids.length != 4)
+        {
+
+            return "Deck size cannot exceed 4!";
+        }
         ArrayList<Integer> tempDeck = new ArrayList<Integer>();
         for (int i = 0; i < ids.length; i++) //For each id, check if the user owns that card
         {
-            if (getCardFromInv(ids[i])!=null && !isCardForTrade(ids[i]))
+            if (getCardFromInv(ids[i])!=null)
             {
-
                 tempDeck.add(ids[i]);
             }
             else
             {
-                return;
+                return "Card(s) not owned!";
             }
         }
         userDeck = tempDeck;
+        return "OK";
     }
 
 

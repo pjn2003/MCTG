@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 public class BattleManagerTest {
 
     public User user1 = new User("John", 20, "i am john", 9999,500,0,false, new Integer[]{1, 3, 5, 7, 9}, new Integer[]{7, 3, 5, 9});
+    public User user1Dupe = new User("John II.", 20, "i am also john", 9999,500,0,false, new Integer[]{1, 3, 5, 7, 9}, new Integer[]{7, 3, 5, 9});
     public User user2 = new User("Jim", 20, "The Jimster", 0,0,125,false, new Integer[]{2, 4, 6, 8}, new Integer[]{2,4, 6, 8});
     DummyCards dummyCards = new DummyCards();
     public void initFight(User user1, User user2)
@@ -84,24 +85,24 @@ public class BattleManagerTest {
     Element n = Element.Normal;
 
     //Unit tests: Check if element effectiveness was properly implemented
-    @Test
+    @Test //6
     public void testSameElement()
     {
         assertEquals(1, resolveElements(f, f));
     }
-    @Test
+    @Test //7
     public void testNotEffective()
     {
         assertEquals(0.5f, resolveElements(f, w));
 
     }
-    @Test
+    @Test //8
     public void testEffective()
     {
         assertEquals(2, resolveElements(f, n));
     }
 
-    @Test //Unit test: Check if monsters have immunities properly implemented
+    @Test //Unit test 9-15: Check if monsters have immunities properly implemented
     public void testMonsters()
     {
         MonsterCard goblin = new MonsterCard(1,"Wood Goblin",1,Element.Normal,MonsterType.Goblin);
@@ -123,63 +124,66 @@ public class BattleManagerTest {
 
     }
 
-    @Test //Unit test: Conduct a battle
-    public void conductBattle()
+    @Test //Unit test 16: Test a single turn of a battle
+    public void testTurn()
     {
-        int roundCounter;
-        int winner=0;
         ArrayList<Integer> deck1 = user1.getUserDeck();
         ArrayList<Integer> deck2 = user2.getUserDeck();
-        Random rand = new Random();
-        for (roundCounter = 1; roundCounter <= 100; roundCounter++)
-        {
+        Integer rand1 = 1; //In an actual battle this would be a random number
+        Integer rand2 = 2;
+        System.out.println("Player 1's deck: " + deck1.size());
+        System.out.println("Player 2's deck: " + deck2.size());
+        Integer card1id = deck1.get(rand1);
+        Integer card2id = deck2.get(rand2);
+        System.out.println("Player 1's card: " + dummyCards.getCard(card1id).getName());
+        System.out.println("Player 2's card: " + dummyCards.getCard(card2id).getName());
 
-            Integer rand1 = rand.nextInt(deck1.size());
-            if (rand1 > deck1.size())
-                rand1 = deck1.size() - 1;
-            Integer rand2 = rand.nextInt(deck2.size());
-            if (rand2 > deck2.size())
-                rand2 = deck2.size() - 1;
-            System.out.println("\n---#|> ROUND " + roundCounter + " <|#---\n");
-            System.out.println("Player 1's deck: " + deck1.size());
-            System.out.println("Player 2's deck: " + deck2.size());
-            Integer card1id = deck1.get(rand1);
-            Integer card2id = deck2.get(rand2);
-            System.out.println("Player 1's card: " + dummyCards.getCard(card1id).getName());
-            System.out.println("Player 2's card: " + dummyCards.getCard(card2id).getName());
-            String t = turn(deck1,deck2,dummyCards.getCard(card1id),dummyCards.getCard(card2id));
-            System.out.println(t);
-
-            if (deck1.isEmpty())
-            {
-                winner=2;
-                System.out.println(user1.getUsername() + " has no cards left. " + user2.getUsername() + " has won the fight!");
-                break;
-            }
-            else if (deck2.isEmpty())
-            {
-                winner=1;
-                System.out.println(user2.getUsername() + " has no cards left. " + user1.getUsername() + " has won the fight!");
-                break;
-            }
-
-            if (roundCounter == 100)
-            {
-                System.out.println("Round 100 reached. The battle ends in a draw!");
-            }
-        }
-
-        //This battle should always end with Jim winning
-        assertEquals(winner, 2);
-        assertNotSame(roundCounter,100);
-
+        String t = turn(deck1,deck2,dummyCards.getCard(card1id),dummyCards.getCard(card2id));
+        System.out.println(t);
+        assertEquals("\nGoblin wins!",t); //The selected cards should always be Goblin and Poke with Goblin winning
 
     }
 
+    @Test //Unit test 17: Conduct a full battle
+    public void conductBattle()
+    {
+        int winner = Battle(user1,user2);
 
-    //For other scripts to use
+        //This battle should always end with Jim winning
+        assertEquals(winner, 2);
+
+
+    }
+    @Test //Unit test 18: Get a draw (100 turns)
+    public void drawBattle()
+    {
+        int winner = Battle(user1,user1Dupe);
+
+        //This battle should always end in a draw
+        assertEquals(winner, 0);
+    }
+    @Test //Unit test 23: At least one player does not own a valid deck
+    public void invalidDeck()
+    {
+        User nUser = new User("Card Buyer",20,"i buy cards",0,0,0,false, new Integer[]{}, new Integer[]{});
+        int winner = Battle(user1,nUser);
+        assertEquals(winner, 0);
+    }
+
+
+
+
+
+    //For other scripts/tests to use
     public int Battle(User user1, User user2)
     {
+        if (user1.getUserDeck().size() < 4 || user2.getUserDeck().size() < 4)
+        {
+            System.out.println("Battle failed! One or both players don't have valid decks.");
+            return 0;
+        }
+
+
         int roundCounter;
         ArrayList<Integer> deck1 = user1.getUserDeck();
         ArrayList<Integer> deck2 = user2.getUserDeck();

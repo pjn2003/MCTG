@@ -6,9 +6,13 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import technikum_wien.mtcgapp.businesslogic.BattleManagerTest;
 import technikum_wien.mtcgapp.controller.ControllerTest;
+import technikum_wien.mtcgapp.dummydata.DummyCards;
+import technikum_wien.mtcgapp.dummydata.DummyPackages;
 import technikum_wien.mtcgapp.models.*;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -18,24 +22,23 @@ public class UserTests extends ControllerTest {
     BattleManagerTest battleManagerTest = new BattleManagerTest();
 
     public User user = new User("Jim", 20, "The Jimster", 0,0,125,false, new Integer[]{1,2,4, 6, 8,9,16}, new Integer[]{2,4,6,8});
-
+    User nUser = new User("Card Buyer",20,"i buy cards",0,0,0,false, new Integer[]{}, new Integer[]{});
+    DummyPackages dummyPackages = new DummyPackages();
+    DummyCards dummyCards = new DummyCards();
     @BeforeAll
     public static void setUp() throws Exception {
         con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mtcgdb?user=postgres&password=postgres");
     }
 
     //Unit tests
-    @Test
+    @Test //4: Create deck
     public void TestDeckCreation() {
 
-        assertEquals("Card(s) not owned!",user.makeDeck(new int[]{10, 15, 12, 30}));
-        System.out.println(user.makeDeck(new int[]{10, 15, 12, 30}));
-        assertEquals("Deck size cannot exceed 4!",user.makeDeck(new int[]{2,4,6,8,9}));
-        System.out.println(user.makeDeck(new int[]{2,4,6,8,9}));
+
         assertEquals("OK",user.makeDeck(new int[]{2, 4, 6, 8}));
         System.out.println(user.makeDeck(new int[]{2, 4, 6, 8}));
     }
-    @Test
+    @Test //5: Print out user data
     public void TestDescribeUser() {
         assertEquals("Username: Jim\n" +
                 "Coins: 20\n" +
@@ -47,6 +50,40 @@ public class UserTests extends ControllerTest {
                 "Cards: [1, 2, 4, 6, 8, 9, 16]\n" +
                 "Deck: [2, 4, 6, 8]",user.describeUser());
     }
+
+    @Test //19: User wants to create deck with unowned cards
+    public void testUnowned()
+    {
+        assertEquals("Card(s) not owned!",user.makeDeck(new int[]{10, 15, 12, 30}));
+        System.out.println(user.makeDeck(new int[]{10, 15, 12, 30}));
+    }
+    @Test //20: User wants to make a deck with more than 4 cards
+    public void testToolarge()
+    {
+        assertEquals("Deck size cannot exceed 4!",user.makeDeck(new int[]{2,4,6,8,9}));
+        System.out.println(user.makeDeck(new int[]{2,4,6,8,9}));
+    }
+    @Test //21: User wants to make a deck but has less than 4 cards
+    public void testNotEnoughCards()
+    {
+        assertEquals("You do not have enough cards!",nUser.makeDeck(new int[]{1,2,3,4}));
+        System.out.println(nUser.makeDeck(new int[]{1,2,3,4}));
+    }
+
+    @Test //22: User buys a package
+    public void buyPackage()
+    {
+        CardPackage pack = dummyPackages.getPackage("FullPack");
+        pack.getPack();
+
+        nUser.describeUser();
+        ArrayList<Integer> c = new ArrayList<Integer>();
+        c = nUser.getUserCards();
+        c.addAll(List.of(pack.getCardList()));
+        nUser.setCoins(nUser.getCoins() -5);
+        nUser.describeUser();
+    }
+
 
 
 

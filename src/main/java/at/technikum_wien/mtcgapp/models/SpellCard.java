@@ -1,6 +1,6 @@
 package at.technikum_wien.mtcgapp.models;
 
-public class SpellCard extends Card{
+public class SpellCard extends Card {
 
     public SpellCard(int id, String name, int baseDamage, Element element) {
         setId(id);
@@ -11,8 +11,9 @@ public class SpellCard extends Card{
     }
 
     @Override
-    public void describe()
+    public String describe()
     {
         System.out.println("Spell " + getName() + ", Damage: " + getBaseDamage() + ", Element: " + getElement());
+        return null;
     }
 }

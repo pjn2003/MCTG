@@ -8,7 +8,7 @@ public class MonsterCard extends Card {
 
     @Getter @Setter private MonsterType type;
 
-    public MonsterCard(int id, String name, int baseDamage, Element element,MonsterType type) {
+    public MonsterCard(int id, String name, int baseDamage, Element element, MonsterType type) {
         setId(id);
         setName(name);
         setBaseDamage(baseDamage);
@@ -18,9 +18,10 @@ public class MonsterCard extends Card {
     }
 
     @Override
-    public void describe()
+    public String describe()
     {
         System.out.println("Monster " + getName() + ", Damage: " + getBaseDamage() + ", Element: " + getElement() + ", Type: " + type);
+        return "Monster " + getName() + ", Damage: " + getBaseDamage() + ", Element: " + getElement() + ", Type: " + type.toString();
     }
 
 }

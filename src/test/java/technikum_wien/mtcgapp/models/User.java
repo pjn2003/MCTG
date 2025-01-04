@@ -108,6 +108,11 @@ public class User {
 
     public String makeDeck(int [] ids)
     {
+        if (getUserCards().size() < 4)
+        {
+            return "You do not have enough cards!";
+        }
+
         if (ids.length != 4)
         {
 
