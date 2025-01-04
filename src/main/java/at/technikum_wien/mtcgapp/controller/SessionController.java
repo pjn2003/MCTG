@@ -5,6 +5,9 @@ import at.technikum_wien.httpserver.http.ContentType;
 import at.technikum_wien.httpserver.http.HttpStatus;
 import at.technikum_wien.httpserver.server.Response;
 
+import java.net.CookieManager;
+import java.net.HttpCookie;
+import java.net.http.HttpResponse;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,11 +32,14 @@ public class SessionController extends Controller{
             ResultSet rs = ps.executeQuery();
             if(rs.next())
             {
-                return new Response(
+                Response res = new Response(
                         HttpStatus.OK,
                         ContentType.JSON,
                         username+"-mtcgToken"
                 );
+
+
+                return res;
             }
             return new Response(
                     HttpStatus.UNAUTHORIZED,

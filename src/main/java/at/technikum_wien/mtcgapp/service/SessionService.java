@@ -50,13 +50,6 @@ public class SessionService implements Service{
             }
         }
 
-
-        //Login using path parts, Usage: /String username/String password
-        if (request.getMethod() == Method.POST && request.getPathParts().size() > 2) {
-            return this.sessionController.login(request.getPathParts().get(1),request.getPathParts().get(2));
-        }
-
-
         return new Response(
                 HttpStatus.BAD_REQUEST, ContentType.JSON, "[]"
         );
