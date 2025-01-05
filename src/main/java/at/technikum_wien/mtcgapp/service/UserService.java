@@ -44,7 +44,17 @@ public UserService()
             }
             else if (request.getMethod() == Method.GET)
             {
-                return this.userController.getUser(n.get("Username").asText());
+                if (Objects.equals(request.getPathParts().get(0), "stats"))
+                {
+                    return this.userController.getUserStats(n.get("Username").asText());
+                }
+                else
+                {
+                    return this.userController.getUser(n.get("Username").asText());
+                }
+
+
+
             }
             else if (request.getMethod() == Method.PUT)
             {

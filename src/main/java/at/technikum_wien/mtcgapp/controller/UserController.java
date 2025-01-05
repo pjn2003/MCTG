@@ -34,6 +34,8 @@ public class UserController extends Controller {
                         rs.getInt("losses"),rs.getBoolean("is_admin"), (Integer[])rs.getArray("cards").getArray(),
                         (Integer[])rs.getArray("deck").getArray());
                 userData.setPassword("Hidden");
+
+
                 userJson = this.getObjectMapper().writeValueAsString(userData);
             }
             else
@@ -150,25 +152,40 @@ public class UserController extends Controller {
     {
         try {
 
-            if(true)
+            Connection con = connect();
+            String query = "SELECT * FROM mtcguser WHERE username=?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, uname);
+            ResultSet rs = ps.executeQuery();
+            con.close();
+            User userData;
+            String userOutput="";
+            if(rs.next())
             {
+                userData = new User(rs.getString("username"),rs.getInt("coins"),rs.getString("bio"),
+                        rs.getInt("elo"),rs.getInt("wins"),
+                        rs.getInt("losses"),rs.getBoolean("is_admin"), (Integer[])rs.getArray("cards").getArray(),
+                        (Integer[])rs.getArray("deck").getArray());
+                userData.setPassword("Hidden");
 
-                //String result = "\nELO Score: "+ userData.getElo() + "\nWins: " + userData.getWins() + "\nLosses: " + userData.getLosses() + "\n";
-                return new Response(
-                        HttpStatus.OK,
-                        ContentType.JSON,
-                        "{ \"message\" : \"User stats:\"\n%s }".formatted("h")
-                );
+                userOutput = "Name: "+userData.getUsername()+"\nELO: "+userData.getElo()+"\nWins:"+userData.getWins()+
+                        "\nLosses:"+userData.getLosses();
             }
             else
             {
-
                 return new Response(
                         HttpStatus.NOT_FOUND,
                         ContentType.JSON,
-                        "{ \"message\" : \"User not found\" }"
+                        "{ \"message\" : \"User not found.\" }"
                 );
             }
+
+            return new Response(
+                    HttpStatus.OK,
+                    ContentType.JSON,
+                    userOutput
+            );
+
         }
         catch(Exception e) {
             e.printStackTrace();

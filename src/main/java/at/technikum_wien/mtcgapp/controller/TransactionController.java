@@ -40,7 +40,7 @@ public class TransactionController extends Controller{
                     query = "SELECT * FROM cardpacks WHERE packname=?";
                     ps = con.prepareStatement(query);
                     ps.setString(1, packName);
-                    System.out.println("Executing query: " + query);
+                    //System.out.println("Executing query: " + query);
                     rs = ps.executeQuery();
 
                     if (rs.next()) {
@@ -48,15 +48,28 @@ public class TransactionController extends Controller{
                         String pQuery = "SELECT * FROM mtcguser WHERE username=?";
                         PreparedStatement ps2 = con.prepareStatement(pQuery);
                         ps2.setString(1, userName);
-                        System.out.println("Executing query: " + pQuery);
+                        //System.out.println("Executing query: " + pQuery);
                         ResultSet rs2 = ps2.executeQuery();
 
                         if (rs2.next())
                         {
+                            Integer[] pcards = new Integer[0];
+                            Integer[] pDeck = new Integer[0];
+                            Array a = rs2.getArray("cards");
+                            if (a!=null)
+                            {
+                                pcards = (Integer[]) a.getArray();
+                            }
+                            a = rs2.getArray("deck");
+                            if (a!=null)
+                            {
+                                pDeck = (Integer[]) a.getArray();
+                            }
+
                             userData = new User(rs2.getString("username"),rs2.getInt("coins"),rs2.getString("bio"),
                                     rs2.getInt("elo"),rs2.getInt("wins"),
-                                    rs2.getInt("losses"),rs2.getBoolean("is_admin"), (Integer[])rs2.getArray("cards").getArray(),
-                                    (Integer[])rs2.getArray("deck").getArray());
+                                    rs2.getInt("losses"),rs2.getBoolean("is_admin"),pcards ,
+                                    pDeck);
                             userData.setPassword("Hidden");
                             Integer[] packcards = (Integer[])rs.getArray("card_list").getArray();
                             Integer addedCardsCounter=0;
@@ -83,7 +96,7 @@ public class TransactionController extends Controller{
                             ps3.setInt(1, userData.getCoins());
                             ps3.setArray(2, sqlarray);
                             ps3.setString(3, userName);
-                            System.out.println("Executing query: " + query3);
+                            //System.out.println("Executing query: " + query3);
                             ps3.executeUpdate();
                             return new Response(
                                     HttpStatus.OK,

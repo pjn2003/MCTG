@@ -50,6 +50,7 @@ public class Main {
         router.addService("/battles", new BattleService());
 
         router.addService("/tradings", new TradingService());
+        router.addService("/lottery", new LotteryService());
         return router;
     }
 

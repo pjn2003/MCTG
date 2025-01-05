@@ -1,22 +1,21 @@
 package at.technikum_wien.mtcgapp.service;
 
-import at.technikum_wien.mtcgapp.controller.BattleController;
-import at.technikum_wien.httpserver.http.ContentType;
-import at.technikum_wien.httpserver.http.HttpStatus;
 import at.technikum_wien.httpserver.http.Method;
 import at.technikum_wien.httpserver.server.Request;
 import at.technikum_wien.httpserver.server.Response;
 import at.technikum_wien.httpserver.server.Service;
+import at.technikum_wien.mtcgapp.controller.LotteryController;
+import at.technikum_wien.mtcgapp.controller.ScoreboardController;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class BattleService implements Service {
+public class LotteryService implements Service {
 
-    private final BattleController controller;
+    private final LotteryController controller;
 
-    public BattleService()
+    public LotteryService()
     {
-        this.controller = new BattleController();
+        this.controller = new LotteryController();
     }
 
     @Override
@@ -27,19 +26,13 @@ public class BattleService implements Service {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode n = mapper.readTree(json);
 
-            if (request.getMethod() == Method.GET) {
-                return this.controller.enterLobby(n.get("Username").asText());
+            if (request.getMethod() == Method.POST) {
+                return this.controller.playLottery(n.get("Username").asText());
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-
-        return new Response(
-                HttpStatus.BAD_REQUEST,
-                ContentType.JSON,
-                "[]"
-        );
+        return null;
     }
 
 }
