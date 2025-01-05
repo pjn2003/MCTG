@@ -13,10 +13,6 @@ import java.sql.ResultSet;
 public class CardsController extends Controller{
 
 
-
-    public CardsController() {
-    }
-
     public Response getUserCards(String uname)
     {
         try {

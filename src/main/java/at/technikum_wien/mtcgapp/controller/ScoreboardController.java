@@ -18,18 +18,16 @@ public class ScoreboardController extends Controller {
     {
         try {
             Connection con = connect();
-            System.out.println("Scoreboard: ");
             String query = "SELECT * FROM mtcguser ORDER BY elo DESC";
             PreparedStatement ps = con.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
-            System.out.println("ELO - Username - W/L\n");
             int counter = 1;
             StringBuilder res = new StringBuilder();
+            res.append("ELO - Username - W/L\n");
             while (rs.next()) {
                 res.append(counter).append(". ").append(rs.getString("elo")).append(" - ").append(rs.getString("username")).append(" - ").append(rs.getInt("wins")).append("/").append(rs.getInt("losses")).append("\n");
                 counter++;
             }
-            System.out.println(res);
             rs.close();
 
             return new Response(

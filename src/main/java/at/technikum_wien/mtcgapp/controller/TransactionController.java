@@ -59,13 +59,19 @@ public class TransactionController extends Controller{
                                     (Integer[])rs2.getArray("deck").getArray());
                             userData.setPassword("Hidden");
                             Integer[] packcards = (Integer[])rs.getArray("card_list").getArray();
+                            Integer addedCardsCounter=0;
                             for (int i = 0; i < packcards.length; i++)
                             {
+
                                     System.out.println("adding card " + packcards[i]);
                                     ArrayList al = userData.getUserCards();
-                                    al.add(packcards[i]);
+
+                                        al.add(packcards[i]);
+                                        addedCardsCounter++;
+
                                     userData.setUserCards(al);
                             }
+
 
                             userData.setCoins(userData.getCoins() -5);
                             userData.describeUser();

@@ -7,10 +7,7 @@ import at.technikum_wien.httpserver.server.Response;
 import at.technikum_wien.mtcgapp.models.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Arrays;
 
 public class UserController extends Controller {
@@ -75,11 +72,15 @@ public class UserController extends Controller {
     {
         try {
 
-            String query = "INSERT INTO mtcguser (username, password, coins) VALUES (?, ?, 20)";
+            String query = "INSERT INTO mtcguser (username, password, coins, cardsinstore) VALUES (?, ?, 20, ?)";
             Connection con = connect();
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, uname);
             ps.setString(2, password);
+            Integer[] defaultStore = new Integer[1];
+            defaultStore[0] = 0;
+            Array dArray = con.createArrayOf("integer", defaultStore); //Default cards in store is only 0 which does not exist
+            ps.setArray(3, dArray);
             ps.executeUpdate();
 
 
