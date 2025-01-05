@@ -22,6 +22,20 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: battlelobby; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.battlelobby (
+    username character varying(32),
+    seed integer,
+    ended integer,
+    opponent character varying(32)
+);
+
+
+ALTER TABLE public.battlelobby OWNER TO postgres;
+
+--
 -- Name: cardpacks; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -87,6 +101,14 @@ CREATE TABLE public.tradedeals (
 ALTER TABLE public.tradedeals OWNER TO postgres;
 
 --
+-- Data for Name: battlelobby; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.battlelobby (username, seed, ended, opponent) FROM stdin;
+\.
+
+
+--
 -- Data for Name: cardpacks; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -148,13 +170,13 @@ COPY public.cards (id, name, basedamage, element, cardtype, monstertype) FROM st
 --
 
 COPY public.mtcguser (username, password, coins, bio, elo, wins, losses, is_admin, cards, deck, cardsinstore) FROM stdin;
-admin	istrator	20	\N	721	251	3	\N	{2,4,6,8}	{2,4,6,8}	{0}
+test_user2	gggggakdwo	15	\N	-20	0	4	\N	{1,3,4,5,6,7}	{1,5,3,4}	{0}
+mihaicaliburn	magic92	15	Hello there	506	152	0	\N	{21,19,16,2,26,18}	{26,21,19,16}	{0}
+kienboec	daniel	18	\N	120	45	67	\N	{2,4,3,9,11}	{2,4,3,9}	{0}
+p_neuhold	afe32radf	98	\N	690	200	2	\N	{1,3,4,5,6,7,8,9,10,11,12}	{1,2,3,4}	{0}
+test_user	abcdef123	13	my newest bio!	926	104	44	t	{4,5,6,7,8,3,1,2,10,11,25,26,5}	{4,5,6,3}	{0}
+admin	istrator	18	\N	721	251	3	\N	{2,4,6,8,25}	{2,4,6,8}	{0}
 altenhof	markus	20	\N	358	160	34	\N	{1,3,5,7,9}	{3,5,7,9}	{0}
-kienboec	daniel	20	\N	120	45	67	\N	{2,4,3,9}	{2,4,3,9}	{0}
-mihaicaliburn	magic92	15	Hello there	500	150	0	\N	{21,19,16,2,26,18}	{26,21,19,16}	{0}
-p_neuhold	afe32radf	100	\N	700	200	0	\N	{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18}	{1,2,3,4}	{0}
-test_user2	gggggakdwo	20	\N	\N	\N	\N	\N	\N	\N	{0}
-test_user	abcdef123	15	my newest bio!	914	100	44	t	{1,2,3,4,5,6,1,3,4,5,6,7}	{4,5,6,3}	{0}
 \.
 
 
