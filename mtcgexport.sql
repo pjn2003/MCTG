@@ -91,6 +91,16 @@ ALTER TABLE public.tradedeals OWNER TO postgres;
 --
 
 COPY public.cardpacks (id, packname, card_list) FROM stdin;
+1	Beginner Pack	{1,2,3,7,22}
+2	Horde of Dragons	{5,10,23,24,25}
+3	Knights of the Realm	{4,28,27,31}
+4	The Dragonslayer	{26}
+5	Ferocious Fiends	{9,12,8,11}
+6	Elven Kingdoms	{6,1,29,30}
+7	Arcane Academy	{7,13,14,20,15,17}
+8	Ultimate Magicks	{18,19,21}
+9	Cards that start with S	{4,16,22,28,29,31}
+10	test_pack	{1,3,4,5,6,7}
 \.
 
 
@@ -121,6 +131,15 @@ COPY public.cards (id, name, basedamage, element, cardtype, monstertype) FROM st
 3	Wood Goblin	1	Normal	Monster	Goblin
 1	Forest Elf	3	Normal	Monster	Elf
 2	Fireball	6	Fire	Spell	\N
+23	Ancient Dragon	120	Normal	Monster	Dragon
+24	Draconic Hatchling	20	Fire	Monster	Dragon
+25	Dragon Egg	0	Normal	Monster	Dragon
+26	Estinien the Dragonslayer	80	Normal	Monster	Knight
+27	Champion of Frost	65	Water	Monster	Knight
+28	Steelier Knight	32	Normal	Monster	Knight
+29	Snow Elf	26	Water	Monster	Elf
+30	Xillian III., King of the Elves	59	Normal	Monster	Elf
+31	Soldier	8	Normal	Monster	Knight
 \.
 
 
@@ -129,10 +148,13 @@ COPY public.cards (id, name, basedamage, element, cardtype, monstertype) FROM st
 --
 
 COPY public.mtcguser (username, password, coins, bio, elo, wins, losses, is_admin, cards, deck, cardsinstore) FROM stdin;
-altenhof	markus	20	\N	358	160	34	\N	{1,3,5,7,9}	{3,5,7,9}	\N
-kienboec	daniel	20	\N	120	45	67	\N	{2,4,3,9}	{2,4,3,9}	\N
-admin	istrator	20	\N	712	248	3	\N	{2,4,6,8}	{2,4,6,8}	\N
-test_user	abcdef123	20	I am a test user	929	100	41	t	{1,2,3,4,5,6}	{1,2,3,4}	\N
+admin	istrator	20	\N	721	251	3	\N	{2,4,6,8}	{2,4,6,8}	{0}
+altenhof	markus	20	\N	358	160	34	\N	{1,3,5,7,9}	{3,5,7,9}	{0}
+kienboec	daniel	20	\N	120	45	67	\N	{2,4,3,9}	{2,4,3,9}	{0}
+mihaicaliburn	magic92	15	Hello there	500	150	0	\N	{21,19,16,2,26,18}	{26,21,19,16}	{0}
+p_neuhold	afe32radf	100	\N	700	200	0	\N	{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18}	{1,2,3,4}	{0}
+test_user2	gggggakdwo	20	\N	\N	\N	\N	\N	\N	\N	{0}
+test_user	abcdef123	15	my newest bio!	914	100	44	t	{1,2,3,4,5,6,1,3,4,5,6,7}	{4,5,6,3}	{0}
 \.
 
 
