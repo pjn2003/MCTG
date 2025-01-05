@@ -9,6 +9,9 @@ import at.technikum_wien.mtcgapp.models.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class DeckController extends Controller {
@@ -53,27 +56,42 @@ public class DeckController extends Controller {
     );
     }
 
-    public Response getUserDeck(String uname){
-        String result = "";
+    public Response getUserDeck(String uname)
+    {
         try {
+            String result ="";
+
+            Connection con = connect();
+            String query = "SELECT * FROM mtcguser WHERE username = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, uname);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Integer[] c = (Integer[])rs.getArray("deck").getArray();
+                for (Integer i : c) {
+                    String cQuery = "SELECT * FROM cards WHERE id =?";
+                    PreparedStatement cs = con.prepareStatement(cQuery);
+                    cs.setInt(1, i);
+                    ResultSet rs2 = cs.executeQuery();
+                    if (rs2.next()) {
+                        result += "Card no. " +i +": "+ rs2.getString("name") + "\n";
+                    }
+                    else
+                    {
+                        return new Response(
+                                HttpStatus.FORBIDDEN,
+                                ContentType.JSON,
+                                "{ \"message\" : \"User owns a card that does not exist.\" }"
+                        );
+                    }
 
 
-        if (this.dummyData.getUser(uname) != null) {
 
-            if (this.dummyData.getUser(uname).getUserDeck().size() > 0) {
-
-                User user = this.dummyData.getUser(uname);
-
-                for(Integer id : user.getUserDeck())
-                {
-                    result += objectMapper.writeValueAsString(this.dummyCards.getCard(id));
                 }
-
                 return new Response(
                         HttpStatus.OK,
                         ContentType.JSON,
-                        result
-
+                        "{ \"message\" : \"User deck:\"\n%s }".formatted(result)
                 );
             }
             else
@@ -81,28 +99,17 @@ public class DeckController extends Controller {
                 return new Response(
                         HttpStatus.NOT_FOUND,
                         ContentType.JSON,
-                        "{ \"message\" : \"User deck is empty.\" }"
+                        "{ \"message\" : \"User not found.\" }"
                 );
             }
 
 
 
-        }
-        }
-        catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return new Response(
-                    HttpStatus.INTERNAL_SERVER_ERROR,
-                    ContentType.JSON,
-                    "[]"
-            );
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
-        return new Response(
-                HttpStatus.NOT_FOUND,
-                ContentType.JSON,
-                "{ \"message\" : \"User not found\" }"
-        );
 
     }
 

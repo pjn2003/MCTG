@@ -7,6 +7,8 @@ import at.technikum_wien.httpserver.http.Method;
 import at.technikum_wien.httpserver.server.Request;
 import at.technikum_wien.httpserver.server.Response;
 import at.technikum_wien.httpserver.server.Service;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class DeckService implements Service {
 
@@ -20,12 +22,18 @@ public class DeckService implements Service {
     @Override
     public Response handleRequest(Request request) {
 
-        //Gets a specific user's deck, Usage: /String username
-        if (request.getMethod() == Method.GET && request.getPathParts().size() == 2)
-        {
-            return this.controller.getUserDeck(request.getPathParts().get(1));
-        } //Creates a deck for a specific user, Usage: /String username/int cardID/int cardID/..., must be 4 cards
-        else if (request.getMethod() == Method.PUT && request.getPathParts().size() == 6)
+        try {
+            String json = request.getBody();
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode n = mapper.readTree(json);
+
+            if (request.getMethod() == Method.GET) {
+                return this.controller.getUserDeck(n.get("Username").asText());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }//Creates a deck for a specific user, Usage: /String username/int cardID/int cardID/..., must be 4 cards
+        if (request.getMethod() == Method.PUT && request.getPathParts().size() == 6)
         {
             return this.controller.createUserDeck(request.getPathParts().get(1),
                     Integer.parseInt(request.getPathParts().get(2)),

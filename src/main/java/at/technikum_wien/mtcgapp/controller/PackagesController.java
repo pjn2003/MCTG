@@ -21,6 +21,7 @@ public class PackagesController extends Controller{
     }
 
 
+    //Obsolete
     public Response getPacks()
     {
         String result = this.dummyPackages.printPackages();
@@ -35,9 +36,6 @@ public class PackagesController extends Controller{
     public Response createPack(CardPackage pack)
     {
         try {
-
-
-
 
 
             Integer maxId = 0;

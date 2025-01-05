@@ -30,6 +30,7 @@ public class Server {
                 //Start a new thread for multithreading
                 Thread t = new Thread(new RequestHandler(clientConnection, this.router));
                 t.start();
+                System.out.println(t.getName());
                 //final RequestHandler socketHandler = new RequestHandler(clientConnection, this.router);
                 //executorService.submit(t);
             }

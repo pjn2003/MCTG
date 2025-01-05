@@ -7,6 +7,8 @@ import at.technikum_wien.httpserver.http.Method;
 import at.technikum_wien.httpserver.server.Request;
 import at.technikum_wien.httpserver.server.Response;
 import at.technikum_wien.httpserver.server.Service;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class CardsService implements Service {
 
@@ -20,10 +22,16 @@ public class CardsService implements Service {
     @Override
     public Response handleRequest(Request request) {
 
-        //Gets cards of specific user, Usage: /String username
-        if (request.getMethod() == Method.GET && request.getPathParts().size() == 2) {
-            return this.controller.getUserCards(request.getPathParts().get(1));
+        try {
+            String json = request.getBody();
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode n = mapper.readTree(json);
 
+            if (request.getMethod() == Method.GET) {
+                return this.controller.getUserCards(n.get("Username").asText());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
 

@@ -156,7 +156,7 @@ public class UserController extends Controller {
                 return new Response(
                         HttpStatus.OK,
                         ContentType.JSON,
-                        "{ \"message\" : \"User stats:\"\n%s }".formatted("amongus")
+                        "{ \"message\" : \"User stats:\"\n%s }".formatted("h")
                 );
             }
             else
