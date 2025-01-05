@@ -30,17 +30,14 @@ public class DeckService implements Service {
             if (request.getMethod() == Method.GET) {
                 return this.controller.getUserDeck(n.get("Username").asText());
             }
+            else if (request.getMethod() == Method.PUT) {
+
+                Integer[] cards = mapper.readValue(n.get("Cards").asText(), Integer[].class);
+
+                return this.controller.createUserDeck(n.get("Username").asText(),cards);
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }//Creates a deck for a specific user, Usage: /String username/int cardID/int cardID/..., must be 4 cards
-        if (request.getMethod() == Method.PUT && request.getPathParts().size() == 6)
-        {
-            return this.controller.createUserDeck(request.getPathParts().get(1),
-                    Integer.parseInt(request.getPathParts().get(2)),
-                    Integer.parseInt(request.getPathParts().get(3)),
-                    Integer.parseInt(request.getPathParts().get(4)),
-                    Integer.parseInt(request.getPathParts().get(5))
-                    );
         }
 
         return new Response(

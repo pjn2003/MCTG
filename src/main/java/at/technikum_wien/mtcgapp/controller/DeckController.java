@@ -24,16 +24,9 @@ public class DeckController extends Controller {
     }
     ObjectMapper objectMapper = new ObjectMapper();
 
-    public Response createUserDeck(String uname, Integer c1, Integer c2, Integer c3, Integer c4)
+    public Response createUserDeck(String uname, Integer[] cards)
     {
         if (this.dummyData.getUser(uname) != null) {
-
-            ArrayList<Integer> newDeck = new ArrayList<Integer>();
-            newDeck.add(c1);
-            newDeck.add(c2);
-            newDeck.add(c3);
-            newDeck.add(c4);
-            this.dummyData.getUser(uname).setUserDeck(newDeck);
 
 
 
